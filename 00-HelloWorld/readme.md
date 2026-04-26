@@ -4,6 +4,35 @@
 - GCC corriendo dentro de un contenedor docker, utilizando [_devcontainers_](https://code.visualstudio.com/docs/devcontainers/containers).
 - OS: Ubuntu 26.04 _Resolute Racoon_
 
+## Corriendo el codigo con Make
+
+- Compilar `hello`: `make`
+``` bash
+compiler@ssl:/src $ make
+gcc hello.c -o hello
+```
+
+- Ejecutar `hello` y obtener el output: `make run`
+``` bash
+compiler@ssl:/src $ make run
+./hello | tee output.txt
+Hello, wordl!
+Version del lenguaje segun macro __STDC_VERSION__: 202311
+```
+
+- Eliminar binarios y archivos intermedios: `make clean`
+``` bash
+compiler@ssl:/src $ make clean
+rm -f *.o hello
+```
+
+- Eliminar todo (incluida la salida): `make clean-all`
+``` bash
+compiler@ssl:/src $ make clean-all
+rm -f *.o hello
+rm -f output.txt
+```
+
 ## Compilador
 
 ### Versiones
