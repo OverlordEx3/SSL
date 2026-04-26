@@ -1,0 +1,2 @@
+Hello, wordl!
+Version del lenguaje segun macro __STDC_VERSION__: 202311
