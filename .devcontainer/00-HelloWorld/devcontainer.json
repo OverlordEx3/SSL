@@ -1,0 +1,33 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/cpp
+{
+	"name": "SSL",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"runArgs": [
+  		"--cap-add=SYS_PTRACE",
+  		"--security-opt",
+  		"seccomp=unconfined"
+ 	],
+	"remoteUser": "compiler",
+	"workspaceMount": "source=${localWorkspaceFolder}/00-HelloWorld,target=/src,type=bind",
+ 	"workspaceFolder": "/src",
+	"customizations": {
+		"vscode": {
+			// Agrego las extensiones de CPPTools en la instancia remota
+			"extensions": [
+				"ms-vscode.cpptools",
+				"ms-vscode.cpptools-extension-pack"			
+			]
+		}
+	}
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "gcc -v",
+}
