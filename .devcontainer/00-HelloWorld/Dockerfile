@@ -8,6 +8,7 @@ ARG GDB_VERSION=17.1-2ubuntu1
 ARG MAKE_VERSION=4.4.1-3
 ARG MANDB_VERSION=2.13.1-1build1
 ARG USER_ID=1001
+ARG USER_NAME=compiler
 
 # Borra man de la lista de exclusion, e instala los paquetes
 # mencionados arriba
@@ -38,14 +39,13 @@ VOLUME /src
 RUN mkdir /output
 VOLUME /output
 
-RUN useradd -u ${USER_ID} -m compiler
-USER compiler
+RUN useradd -u ${USER_ID} -m ${USER_NAME}
 
 # Comando por defecto, inicia una shell para permitir ejecutar comandos
 # Overrideable cuando se lance el project con CMD en docker-compose.yml
 # Configura  el prompt de la terminal para mostrar ssl en lugar del host, que es dinámico
-RUN cat <<-EOF >> /home/compiler/.bashrc
-    # Configura el prompt para que quede compiler@ssl:/src $, por ejemplo
+RUN cat <<-EOF >> /home/${USER_NAME}/.bashrc
+    # Configura el prompt para que quede ${USER_NAME}@ssl:/src $, por ejemplo
     PS1='\[\e[1;32m\]\u@ssl\[\e[m\]:\[\e[1;34m\]\w\[\e[m\] \$ '
 
     # Banner
@@ -62,5 +62,12 @@ RUN cat <<-EOF >> /home/compiler/.bashrc
 
 EOF
 
+RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
+    && mkdir /commandhistory \
+    && touch /commandhistory/.bash_history \
+    && chown -R ${USER_NAME} /commandhistory \
+    && echo "$SNIPPET" >> "/home/${USER_NAME}/.bashrc"
+
+USER ${USER_NAME}
 WORKDIR /src
 ENTRYPOINT ["/bin/bash"]

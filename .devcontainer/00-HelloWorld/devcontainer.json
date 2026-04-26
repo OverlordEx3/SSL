@@ -15,19 +15,26 @@
  	"workspaceFolder": "/src",
 	"customizations": {
 		"vscode": {
+			"settings": {
+            	"terminal.integrated.defaultProfile.linux": "bash"
+        	},
 			// Agrego las extensiones de CPPTools en la instancia remota
 			"extensions": [
 				"ms-vscode.cpptools",
-				"ms-vscode.cpptools-extension-pack"			
+				"ms-vscode.cpptools-extension-pack",
+				"ms-vscode.makefile-tools"	
 			]
 		}
+	},
+	"mounts": [
+    	"source=00-HelloWorld-bashhistory,target=/commandhistory,type=volume"
+  	],
+	"postCreateCommand": {
+	    "Fix Volume Permissions": "sudo chown -R $(whoami): /commandhistory"
 	}
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "gcc -v",
 }
